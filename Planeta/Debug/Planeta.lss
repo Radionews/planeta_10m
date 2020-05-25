@@ -3,31 +3,31 @@ Planeta.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         0000022c  00000000  00000000  00000094  2**1
+  0 .text         000001b0  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000050  00800060  0000022c  000002c0  2**0
+  1 .data         00000050  00800060  000001b0  00000244  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          00000054  008000b0  008000b0  00000310  2**0
+  2 .bss          00000002  008000b0  008000b0  00000294  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00000310  2**0
+  3 .comment      00000030  00000000  00000000  00000294  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000340  2**2
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000002c4  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000048  00000000  00000000  0000037c  2**0
+  5 .debug_aranges 00000048  00000000  00000000  00000300  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000820  00000000  00000000  000003c4  2**0
+  6 .debug_info   000007c7  00000000  00000000  00000348  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000006a3  00000000  00000000  00000be4  2**0
+  7 .debug_abbrev 00000694  00000000  00000000  00000b0f  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000427  00000000  00000000  00001287  2**0
+  8 .debug_line   000003cd  00000000  00000000  000011a3  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000000c0  00000000  00000000  000016b0  2**2
+  9 .debug_frame  00000084  00000000  00000000  00001570  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000374  00000000  00000000  00001770  2**0
+ 10 .debug_str    00000385  00000000  00000000  000015f4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    0000025e  00000000  00000000  00001ae4  2**0
+ 11 .debug_loc    000001ad  00000000  00000000  00001979  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000050  00000000  00000000  00001d42  2**0
+ 12 .debug_ranges 00000050  00000000  00000000  00001b26  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -44,7 +44,7 @@ Disassembly of section .text:
   20:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   24:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   28:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
-  2c:	0c 94 57 00 	jmp	0xae	; 0xae <__vector_11>
+  2c:	0c 94 53 00 	jmp	0xa6	; 0xa6 <__vector_11>
   30:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   34:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   38:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
@@ -67,8 +67,8 @@ Disassembly of section .text:
   60:	10 e0       	ldi	r17, 0x00	; 0
   62:	a0 e6       	ldi	r26, 0x60	; 96
   64:	b0 e0       	ldi	r27, 0x00	; 0
-  66:	ec e2       	ldi	r30, 0x2C	; 44
-  68:	f2 e0       	ldi	r31, 0x02	; 2
+  66:	e0 eb       	ldi	r30, 0xB0	; 176
+  68:	f1 e0       	ldi	r31, 0x01	; 1
   6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
   6c:	05 90       	lpm	r0, Z+
   6e:	0d 92       	st	X+, r0
@@ -77,7 +77,7 @@ Disassembly of section .text:
   74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
 
 00000076 <__do_clear_bss>:
-  76:	21 e0       	ldi	r18, 0x01	; 1
+  76:	20 e0       	ldi	r18, 0x00	; 0
   78:	a0 eb       	ldi	r26, 0xB0	; 176
   7a:	b0 e0       	ldi	r27, 0x00	; 0
   7c:	01 c0       	rjmp	.+2      	; 0x80 <.do_clear_bss_start>
@@ -86,395 +86,296 @@ Disassembly of section .text:
   7e:	1d 92       	st	X+, r1
 
 00000080 <.do_clear_bss_start>:
-  80:	a4 30       	cpi	r26, 0x04	; 4
+  80:	a2 3b       	cpi	r26, 0xB2	; 178
   82:	b2 07       	cpc	r27, r18
   84:	e1 f7       	brne	.-8      	; 0x7e <.do_clear_bss_loop>
-  86:	0e 94 be 00 	call	0x17c	; 0x17c <main>
-  8a:	0c 94 14 01 	jmp	0x228	; 0x228 <_exit>
+  86:	0e 94 7e 00 	call	0xfc	; 0xfc <main>
+  8a:	0c 94 d6 00 	jmp	0x1ac	; 0x1ac <_exit>
 
 0000008e <__bad_interrupt>:
   8e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 00000092 <USARTInit>:
-void USARTInit(unsigned int ubrr) {
-	//  нормальный асинхронный двунаправленный режим работы
-	//  UBRR = f / (16 * band)
-	//  Установка скорости
-	ubrr = 12;
-	UBRRH = (unsigned char)(ubrr>>8);
-  92:	10 bc       	out	0x20, r1	; 32
-	UBRRL = (unsigned char)(ubrr);
-  94:	8c e0       	ldi	r24, 0x0C	; 12
-  96:	89 b9       	out	0x09, r24	; 9
-	//  |||||PE     - ошибка чётности
-	//  ||||||U2X   - Двойная скорость
-	//  |||||||MPCM - Многопроцессорный режим
-	//  ||||||||
-	//  76543210
-	UCSRA = 0x02;
-  98:	82 e0       	ldi	r24, 0x02	; 2
-  9a:	8b b9       	out	0x0b, r24	; 11
-	//  |||||||TXB8 - 9 бит переданных данных
-	//  ||||||||
-	//  76543210
-	
-	//  разрешен приём и передача данных по UART
-	UCSRB = 1<<RXCIE | 1<<RXEN | 1<<TXEN;
-  9c:	88 e9       	ldi	r24, 0x98	; 152
-  9e:	8a b9       	out	0x0a, r24	; 10
-	//  ||||||UCSZ0  - UCSZ0: 2 размер кадра данных
-	//  |||||||UCPOL - в синхронном режиме - тактирование
-	//  ||||||||
-	//  76543210
-	//  8-битовая посылка, 2 стоп бита
-	UCSRC = 1<<URSEL | 1<<USBS | 1<<UCSZ0 | 1<<UCSZ1;
-  a0:	8e e8       	ldi	r24, 0x8E	; 142
-  a2:	80 bd       	out	0x20, r24	; 32
-  a4:	08 95       	ret
-
-000000a6 <USARTTransmitChar>:
 }
 
 void USARTTransmitChar(char c) {
 	//  Устанавливается, когда регистр свободен
 	while(!( UCSRA & (1<<UDRE)));
-  a6:	5d 9b       	sbis	0x0b, 5	; 11
-  a8:	fe cf       	rjmp	.-4      	; 0xa6 <USARTTransmitChar>
 	UDR = c;
-  aa:	8c b9       	out	0x0c, r24	; 12
-  ac:	08 95       	ret
+  92:	10 bc       	out	0x20, r1	; 32
+  94:	8c e0       	ldi	r24, 0x0C	; 12
+  96:	89 b9       	out	0x09, r24	; 9
+  98:	82 e0       	ldi	r24, 0x02	; 2
+  9a:	8b b9       	out	0x0b, r24	; 11
+  9c:	88 e9       	ldi	r24, 0x98	; 152
+  9e:	8a b9       	out	0x0a, r24	; 10
+  a0:	8e e8       	ldi	r24, 0x8E	; 142
+  a2:	80 bd       	out	0x20, r24	; 32
+  a4:	08 95       	ret
 
-000000ae <__vector_11>:
+000000a6 <__vector_11>:
 }
 
 ISR(USART_RXC_vect)
 {
-  ae:	1f 92       	push	r1
-  b0:	0f 92       	push	r0
-  b2:	0f b6       	in	r0, 0x3f	; 63
-  b4:	0f 92       	push	r0
-  b6:	11 24       	eor	r1, r1
-  b8:	2f 93       	push	r18
-  ba:	3f 93       	push	r19
-  bc:	4f 93       	push	r20
-  be:	5f 93       	push	r21
-  c0:	6f 93       	push	r22
-  c2:	7f 93       	push	r23
-  c4:	8f 93       	push	r24
-  c6:	9f 93       	push	r25
-  c8:	af 93       	push	r26
-  ca:	bf 93       	push	r27
-  cc:	cf 93       	push	r28
-  ce:	ef 93       	push	r30
-  d0:	ff 93       	push	r31
-	DATA_AVAL = 0;
-  d2:	10 92 b0 00 	sts	0x00B0, r1	; 0x8000b0 <__data_end>
-	char bf= UDR;
-  d6:	cc b1       	in	r28, 0x0c	; 12
-	buffer[INDEX_R]=bf;
-  d8:	e0 91 b1 00 	lds	r30, 0x00B1	; 0x8000b1 <INDEX_R>
-  dc:	f0 e0       	ldi	r31, 0x00	; 0
-  de:	ee 54       	subi	r30, 0x4E	; 78
-  e0:	ff 4f       	sbci	r31, 0xFF	; 255
-  e2:	c0 83       	st	Z, r28
-	INDEX_R++;
-  e4:	80 91 b1 00 	lds	r24, 0x00B1	; 0x8000b1 <INDEX_R>
-  e8:	8f 5f       	subi	r24, 0xFF	; 255
-  ea:	80 93 b1 00 	sts	0x00B1, r24	; 0x8000b1 <INDEX_R>
-	
-	if(bf != 0x81 && INDEX_R == 1)
-  ee:	c1 38       	cpi	r28, 0x81	; 129
-  f0:	61 f0       	breq	.+24     	; 0x10a <__vector_11+0x5c>
-  f2:	80 91 b1 00 	lds	r24, 0x00B1	; 0x8000b1 <INDEX_R>
-  f6:	81 30       	cpi	r24, 0x01	; 1
-  f8:	41 f4       	brne	.+16     	; 0x10a <__vector_11+0x5c>
-	{
-		INDEX_R=0;	
-  fa:	10 92 b1 00 	sts	0x00B1, r1	; 0x8000b1 <INDEX_R>
-		DATA_AVAL = 0;
-  fe:	10 92 b0 00 	sts	0x00B0, r1	; 0x8000b0 <__data_end>
-		USARTTransmitChar('G');	
- 102:	87 e4       	ldi	r24, 0x47	; 71
- 104:	0e 94 53 00 	call	0xa6	; 0xa6 <USARTTransmitChar>
- 108:	03 c0       	rjmp	.+6      	; 0x110 <__vector_11+0x62>
-	}
-	else
-	{
-		USARTTransmitChar('B');
- 10a:	82 e4       	ldi	r24, 0x42	; 66
- 10c:	0e 94 53 00 	call	0xa6	; 0xa6 <USARTTransmitChar>
-	}
-	
-	if (bf == 0x82 || INDEX_R >= N_BUFF)
- 110:	c2 38       	cpi	r28, 0x82	; 130
- 112:	21 f0       	breq	.+8      	; 0x11c <__vector_11+0x6e>
- 114:	80 91 b1 00 	lds	r24, 0x00B1	; 0x8000b1 <INDEX_R>
- 118:	82 35       	cpi	r24, 0x52	; 82
- 11a:	28 f0       	brcs	.+10     	; 0x126 <__vector_11+0x78>
-	{
-		INDEX_R = 0;
- 11c:	10 92 b1 00 	sts	0x00B1, r1	; 0x8000b1 <INDEX_R>
-		DATA_AVAL = 1;
- 120:	81 e0       	ldi	r24, 0x01	; 1
- 122:	80 93 b0 00 	sts	0x00B0, r24	; 0x8000b0 <__data_end>
-	}
-
+  a6:	1f 92       	push	r1
+  a8:	0f 92       	push	r0
+  aa:	0f b6       	in	r0, 0x3f	; 63
+  ac:	0f 92       	push	r0
+  ae:	11 24       	eor	r1, r1
+  b0:	8f 93       	push	r24
+	DATA_AVAL = 1;
+  b2:	81 e0       	ldi	r24, 0x01	; 1
+  b4:	80 93 b0 00 	sts	0x00B0, r24	; 0x8000b0 <__data_end>
+	NEW_DATA = UDR;
+  b8:	8c b1       	in	r24, 0x0c	; 12
+  ba:	80 93 b1 00 	sts	0x00B1, r24	; 0x8000b1 <NEW_DATA>
 }
- 126:	ff 91       	pop	r31
- 128:	ef 91       	pop	r30
- 12a:	cf 91       	pop	r28
- 12c:	bf 91       	pop	r27
- 12e:	af 91       	pop	r26
- 130:	9f 91       	pop	r25
- 132:	8f 91       	pop	r24
- 134:	7f 91       	pop	r23
- 136:	6f 91       	pop	r22
- 138:	5f 91       	pop	r21
- 13a:	4f 91       	pop	r20
- 13c:	3f 91       	pop	r19
- 13e:	2f 91       	pop	r18
- 140:	0f 90       	pop	r0
- 142:	0f be       	out	0x3f, r0	; 63
- 144:	0f 90       	pop	r0
- 146:	1f 90       	pop	r1
- 148:	18 95       	reti
+  be:	8f 91       	pop	r24
+  c0:	0f 90       	pop	r0
+  c2:	0f be       	out	0x3f, r0	; 63
+  c4:	0f 90       	pop	r0
+  c6:	1f 90       	pop	r1
+  c8:	18 95       	reti
 
-0000014a <write>:
+000000ca <write>:
 };
 
   
 void write()
 {
 	PORTD &= ~WR;
- 14a:	96 98       	cbi	0x12, 6	; 18
+  ca:	96 98       	cbi	0x12, 6	; 18
 	//_delay_ms(50);
 	PORTD |= WR;
- 14c:	96 9a       	sbi	0x12, 6	; 18
- 14e:	08 95       	ret
+  cc:	96 9a       	sbi	0x12, 6	; 18
+  ce:	08 95       	ret
 
-00000150 <init>:
+000000d0 <init>:
 }
 
 void init()
 {
 	DDRA = 0xFF;
- 150:	8f ef       	ldi	r24, 0xFF	; 255
- 152:	8a bb       	out	0x1a, r24	; 26
+  d0:	8f ef       	ldi	r24, 0xFF	; 255
+  d2:	8a bb       	out	0x1a, r24	; 26
 	DDRB = 0x0F;
- 154:	9f e0       	ldi	r25, 0x0F	; 15
- 156:	97 bb       	out	0x17, r25	; 23
+  d4:	9f e0       	ldi	r25, 0x0F	; 15
+  d6:	97 bb       	out	0x17, r25	; 23
 	DDRC = 0xFF;
- 158:	84 bb       	out	0x14, r24	; 20
+  d8:	84 bb       	out	0x14, r24	; 20
 	DDRD = 0xE0;
- 15a:	80 ee       	ldi	r24, 0xE0	; 224
- 15c:	81 bb       	out	0x11, r24	; 17
+  da:	80 ee       	ldi	r24, 0xE0	; 224
+  dc:	81 bb       	out	0x11, r24	; 17
 	PORTD = 0;
- 15e:	12 ba       	out	0x12, r1	; 18
+  de:	12 ba       	out	0x12, r1	; 18
 	//настройка всех портов МК на вывод
 	PORTD |= RD;
- 160:	97 9a       	sbi	0x12, 7	; 18
+  e0:	97 9a       	sbi	0x12, 7	; 18
 	//опускание линии RD (чтения) в ноль, он нам вообще не нужен
 	PORTA = MODE_0;
- 162:	80 e8       	ldi	r24, 0x80	; 128
- 164:	8b bb       	out	0x1b, r24	; 27
+  e2:	80 e8       	ldi	r24, 0x80	; 128
+  e4:	8b bb       	out	0x1b, r24	; 27
 	//подготавливаем управляющее слово
 	PORTC = (1<<CS0)|(1<<A0)|(1<<A1);
- 166:	83 e4       	ldi	r24, 0x43	; 67
- 168:	85 bb       	out	0x15, r24	; 21
+  e6:	83 e4       	ldi	r24, 0x43	; 67
+  e8:	85 bb       	out	0x15, r24	; 21
 	write();
- 16a:	0e 94 a5 00 	call	0x14a	; 0x14a <write>
+  ea:	0e 94 65 00 	call	0xca	; 0xca <write>
 	PORTC = (1<<CS1)|(1<<A0)|(1<<A1);
- 16e:	83 e8       	ldi	r24, 0x83	; 131
- 170:	85 bb       	out	0x15, r24	; 21
+  ee:	83 e8       	ldi	r24, 0x83	; 131
+  f0:	85 bb       	out	0x15, r24	; 21
 	write();
- 172:	0e 94 a5 00 	call	0x14a	; 0x14a <write>
+  f2:	0e 94 65 00 	call	0xca	; 0xca <write>
 	//настриваем в обе микросхемы режим 0
 	//посылакем строб записи
 	PORTA = 0;
- 176:	1b ba       	out	0x1b, r1	; 27
+  f6:	1b ba       	out	0x1b, r1	; 27
 	PORTC = 0;
- 178:	15 ba       	out	0x15, r1	; 21
- 17a:	08 95       	ret
+  f8:	15 ba       	out	0x15, r1	; 21
+  fa:	08 95       	ret
 
-0000017c <main>:
+000000fc <main>:
 }
 
 
 int main(void)
 {
 	init();
- 17c:	0e 94 a8 00 	call	0x150	; 0x150 <init>
+  fc:	0e 94 68 00 	call	0xd0	; 0xd0 <init>
 	USARTInit(MYUBRR);
- 180:	85 e0       	ldi	r24, 0x05	; 5
- 182:	90 e0       	ldi	r25, 0x00	; 0
- 184:	0e 94 49 00 	call	0x92	; 0x92 <USARTInit>
+ 100:	85 e0       	ldi	r24, 0x05	; 5
+ 102:	90 e0       	ldi	r25, 0x00	; 0
+ 104:	0e 94 49 00 	call	0x92	; 0x92 <USARTInit>
 	sei();
- 188:	78 94       	sei
- 18a:	03 e0       	ldi	r16, 0x03	; 3
- 18c:	11 e0       	ldi	r17, 0x01	; 1
+ 108:	78 94       	sei
+ 10a:	00 e6       	ldi	r16, 0x60	; 96
+ 10c:	10 e0       	ldi	r17, 0x00	; 0
 		
 		for (unsigned char x=0;x<5;x++)
 		{
 			PORTA = 0;
 			PORTC = 0;
 			PORTB = 0x0F;
- 18e:	0f 2e       	mov	r0, r31
- 190:	ff e0       	ldi	r31, 0x0F	; 15
- 192:	ff 2e       	mov	r15, r31
- 194:	f0 2d       	mov	r31, r0
+ 10e:	0f 2e       	mov	r0, r31
+ 110:	ff e0       	ldi	r31, 0x0F	; 15
+ 112:	ef 2e       	mov	r14, r31
+ 114:	f0 2d       	mov	r31, r0
 	unsigned char y = 0;
 	while (1) 
     {
 		y = 0;
 		
 		if(DATA_AVAL == 1)
- 196:	80 91 b0 00 	lds	r24, 0x00B0	; 0x8000b0 <__data_end>
- 19a:	81 30       	cpi	r24, 0x01	; 1
- 19c:	09 f0       	breq	.+2      	; 0x1a0 <main+0x24>
- 19e:	3f c0       	rjmp	.+126    	; 0x21e <main+0xa2>
- 1a0:	e3 eb       	ldi	r30, 0xB3	; 179
- 1a2:	f0 e0       	ldi	r31, 0x00	; 0
- 1a4:	a0 e6       	ldi	r26, 0x60	; 96
- 1a6:	b0 e0       	ldi	r27, 0x00	; 0
+ 116:	80 91 b0 00 	lds	r24, 0x00B0	; 0x8000b0 <__data_end>
+ 11a:	81 30       	cpi	r24, 0x01	; 1
+ 11c:	09 f0       	breq	.+2      	; 0x120 <main+0x24>
+ 11e:	41 c0       	rjmp	.+130    	; 0x1a2 <main+0xa6>
+ 120:	ef ea       	ldi	r30, 0xAF	; 175
+ 122:	f0 e0       	ldi	r31, 0x00	; 0
 		{
-			for(int l = 0; l<80;l++)
+			for(int l = 79; l>0;l--)
 			{
-				stroka[l] = buffer[l+1];
- 1a8:	81 91       	ld	r24, Z+
- 1aa:	8d 93       	st	X+, r24
+				stroka[l] = stroka[l-1];
+ 124:	82 91       	ld	r24, -Z
+ 126:	81 83       	std	Z+1, r24	; 0x01
     {
 		y = 0;
 		
 		if(DATA_AVAL == 1)
 		{
-			for(int l = 0; l<80;l++)
- 1ac:	0e 17       	cp	r16, r30
- 1ae:	1f 07       	cpc	r17, r31
- 1b0:	d9 f7       	brne	.-10     	; 0x1a8 <main+0x2c>
+			for(int l = 79; l>0;l--)
+ 128:	0e 17       	cp	r16, r30
+ 12a:	1f 07       	cpc	r17, r31
+ 12c:	d9 f7       	brne	.-10     	; 0x124 <main+0x28>
 			{
-				stroka[l] = buffer[l+1];
-			}	
+				stroka[l] = stroka[l-1];
+			}
+			stroka[0] = NEW_DATA;
+ 12e:	80 91 b1 00 	lds	r24, 0x00B1	; 0x8000b1 <NEW_DATA>
+ 132:	f8 01       	movw	r30, r16
+ 134:	80 83       	st	Z, r24
 			DATA_AVAL = 0;
- 1b2:	10 92 b0 00 	sts	0x00B0, r1	; 0x8000b0 <__data_end>
- 1b6:	33 c0       	rjmp	.+102    	; 0x21e <main+0xa2>
+ 136:	10 92 b0 00 	sts	0x00B0, r1	; 0x8000b0 <__data_end>
+ 13a:	33 c0       	rjmp	.+102    	; 0x1a2 <main+0xa6>
 		}
 		
 		for (unsigned char x=0;x<5;x++)
 		{
 			PORTA = 0;
- 1b8:	1b ba       	out	0x1b, r1	; 27
+ 13c:	1b ba       	out	0x1b, r1	; 27
 			PORTC = 0;
- 1ba:	15 ba       	out	0x15, r1	; 21
+ 13e:	15 ba       	out	0x15, r1	; 21
 			PORTB = 0x0F;
- 1bc:	f8 ba       	out	0x18, r15	; 24
+ 140:	e8 ba       	out	0x18, r14	; 24
 			if(x>2) 
- 1be:	82 e0       	ldi	r24, 0x02	; 2
- 1c0:	8e 15       	cp	r24, r14
- 1c2:	38 f4       	brcc	.+14     	; 0x1d2 <main+0x56>
+ 142:	f2 e0       	ldi	r31, 0x02	; 2
+ 144:	ff 15       	cp	r31, r15
+ 146:	38 f4       	brcc	.+14     	; 0x156 <main+0x5a>
 			{
 				PORTC |= (1<<CS1);
- 1c4:	af 9a       	sbi	0x15, 7	; 21
+ 148:	af 9a       	sbi	0x15, 7	; 21
 				PORTC |= x-3;
- 1c6:	85 b3       	in	r24, 0x15	; 21
- 1c8:	9d ef       	ldi	r25, 0xFD	; 253
- 1ca:	9e 0d       	add	r25, r14
- 1cc:	89 2b       	or	r24, r25
- 1ce:	85 bb       	out	0x15, r24	; 21
- 1d0:	29 c0       	rjmp	.+82     	; 0x224 <main+0xa8>
+ 14a:	85 b3       	in	r24, 0x15	; 21
+ 14c:	9d ef       	ldi	r25, 0xFD	; 253
+ 14e:	9f 0d       	add	r25, r15
+ 150:	89 2b       	or	r24, r25
+ 152:	85 bb       	out	0x15, r24	; 21
+ 154:	29 c0       	rjmp	.+82     	; 0x1a8 <main+0xac>
 			}
 			else
 			{
 				PORTC |= (1<<CS0);
- 1d2:	ae 9a       	sbi	0x15, 6	; 21
+ 156:	ae 9a       	sbi	0x15, 6	; 21
 				PORTC |= x;
- 1d4:	85 b3       	in	r24, 0x15	; 21
- 1d6:	8e 29       	or	r24, r14
- 1d8:	85 bb       	out	0x15, r24	; 21
- 1da:	24 c0       	rjmp	.+72     	; 0x224 <main+0xa8>
+ 158:	85 b3       	in	r24, 0x15	; 21
+ 15a:	8f 29       	or	r24, r15
+ 15c:	85 bb       	out	0x15, r24	; 21
+ 15e:	24 c0       	rjmp	.+72     	; 0x1a8 <main+0xac>
 			//write();
 			//_delay_ms(500);
 			
 			for(unsigned char i = 0;i<16;i++)
 			{
 				PORTA = stroka[y];
- 1dc:	ed 2f       	mov	r30, r29
- 1de:	ec 0f       	add	r30, r28
- 1e0:	f0 e0       	ldi	r31, 0x00	; 0
- 1e2:	e0 5a       	subi	r30, 0xA0	; 160
- 1e4:	ff 4f       	sbci	r31, 0xFF	; 255
- 1e6:	80 81       	ld	r24, Z
- 1e8:	8b bb       	out	0x1b, r24	; 27
+ 160:	ed 2f       	mov	r30, r29
+ 162:	ec 0f       	add	r30, r28
+ 164:	f0 e0       	ldi	r31, 0x00	; 0
+ 166:	e0 5a       	subi	r30, 0xA0	; 160
+ 168:	ff 4f       	sbci	r31, 0xFF	; 255
+ 16a:	80 81       	ld	r24, Z
+ 16c:	8b bb       	out	0x1b, r24	; 27
 				y++;
 				PORTB = (~(i)&0x07);
- 1ea:	8c 2f       	mov	r24, r28
- 1ec:	80 95       	com	r24
- 1ee:	87 70       	andi	r24, 0x07	; 7
- 1f0:	88 bb       	out	0x18, r24	; 24
+ 16e:	8c 2f       	mov	r24, r28
+ 170:	80 95       	com	r24
+ 172:	87 70       	andi	r24, 0x07	; 7
+ 174:	88 bb       	out	0x18, r24	; 24
 				if(i>=8)
- 1f2:	c8 30       	cpi	r28, 0x08	; 8
- 1f4:	10 f0       	brcs	.+4      	; 0x1fa <main+0x7e>
+ 176:	c8 30       	cpi	r28, 0x08	; 8
+ 178:	10 f0       	brcs	.+4      	; 0x17e <main+0x82>
 				{
 					PORTB &= ~(1<<3);
- 1f6:	c3 98       	cbi	0x18, 3	; 24
- 1f8:	01 c0       	rjmp	.+2      	; 0x1fc <main+0x80>
+ 17a:	c3 98       	cbi	0x18, 3	; 24
+ 17c:	01 c0       	rjmp	.+2      	; 0x180 <main+0x84>
 					
 				}
 				else
 				{
 					PORTB |= (1<<3);
- 1fa:	c3 9a       	sbi	0x18, 3	; 24
+ 17e:	c3 9a       	sbi	0x18, 3	; 24
 				}
 				write();
- 1fc:	0e 94 a5 00 	call	0x14a	; 0x14a <write>
+ 180:	0e 94 65 00 	call	0xca	; 0xca <write>
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 200:	82 e4       	ldi	r24, 0x42	; 66
- 202:	8a 95       	dec	r24
- 204:	f1 f7       	brne	.-4      	; 0x202 <main+0x86>
- 206:	00 c0       	rjmp	.+0      	; 0x208 <main+0x8c>
+ 184:	82 e4       	ldi	r24, 0x42	; 66
+ 186:	8a 95       	dec	r24
+ 188:	f1 f7       	brne	.-4      	; 0x186 <main+0x8a>
+ 18a:	00 c0       	rjmp	.+0      	; 0x18c <main+0x90>
 				_delay_us(200);
 				PORTA = 0;
- 208:	1b ba       	out	0x1b, r1	; 27
+ 18c:	1b ba       	out	0x1b, r1	; 27
 				write();
- 20a:	0e 94 a5 00 	call	0x14a	; 0x14a <write>
+ 18e:	0e 94 65 00 	call	0xca	; 0xca <write>
 				PORTC |= x;
 			}
 			//write();
 			//_delay_ms(500);
 			
 			for(unsigned char i = 0;i<16;i++)
- 20e:	cf 5f       	subi	r28, 0xFF	; 255
- 210:	c0 31       	cpi	r28, 0x10	; 16
- 212:	21 f7       	brne	.-56     	; 0x1dc <main+0x60>
- 214:	d0 5f       	subi	r29, 0xF0	; 240
-				stroka[l] = buffer[l+1];
-			}	
+ 192:	cf 5f       	subi	r28, 0xFF	; 255
+ 194:	c0 31       	cpi	r28, 0x10	; 16
+ 196:	21 f7       	brne	.-56     	; 0x160 <main+0x64>
+ 198:	d0 5f       	subi	r29, 0xF0	; 240
+			}
+			stroka[0] = NEW_DATA;
 			DATA_AVAL = 0;
 		}
 		
 		for (unsigned char x=0;x<5;x++)
- 216:	e3 94       	inc	r14
- 218:	d0 35       	cpi	r29, 0x50	; 80
- 21a:	71 f6       	brne	.-100    	; 0x1b8 <main+0x3c>
- 21c:	bc cf       	rjmp	.-136    	; 0x196 <main+0x1a>
+ 19a:	f3 94       	inc	r15
+ 19c:	d0 35       	cpi	r29, 0x50	; 80
+ 19e:	71 f6       	brne	.-100    	; 0x13c <main+0x40>
+ 1a0:	ba cf       	rjmp	.-140    	; 0x116 <main+0x1a>
 	PORTC = 0;
 }
 
 
 int main(void)
 {
- 21e:	e1 2c       	mov	r14, r1
- 220:	d0 e0       	ldi	r29, 0x00	; 0
- 222:	ca cf       	rjmp	.-108    	; 0x1b8 <main+0x3c>
- 224:	c0 e0       	ldi	r28, 0x00	; 0
- 226:	da cf       	rjmp	.-76     	; 0x1dc <main+0x60>
+ 1a2:	f1 2c       	mov	r15, r1
+ 1a4:	d0 e0       	ldi	r29, 0x00	; 0
+ 1a6:	ca cf       	rjmp	.-108    	; 0x13c <main+0x40>
+ 1a8:	c0 e0       	ldi	r28, 0x00	; 0
+ 1aa:	da cf       	rjmp	.-76     	; 0x160 <main+0x64>
 
-00000228 <_exit>:
- 228:	f8 94       	cli
+000001ac <_exit>:
+ 1ac:	f8 94       	cli
 
-0000022a <__stop_program>:
- 22a:	ff cf       	rjmp	.-2      	; 0x22a <__stop_program>
+000001ae <__stop_program>:
+ 1ae:	ff cf       	rjmp	.-2      	; 0x1ae <__stop_program>

@@ -22,8 +22,8 @@
 #define CS0 6
 #define CS1 7
 
-char buffer[N_BUFF];
-volatile unsigned char INDEX_R = 0;
+volatile unsigned char NEW_DATA = 0;
+//volatile unsigned char INDEX_R = 0;
 volatile unsigned char DATA_AVAL = 0;
 
 void USARTInit(unsigned int ubrr) {
@@ -82,36 +82,18 @@ void USARTTransmitChar(char c) {
 
 ISR(USART_RXC_vect)
 {
-	DATA_AVAL = 0;
-	char bf= UDR;
-	buffer[INDEX_R]=bf;
-	INDEX_R++;
-	
-	if(bf != 0x81 && INDEX_R == 1)
-	{
-		INDEX_R=0;	
-		DATA_AVAL = 0;
-		USARTTransmitChar('G');	
-	}
-	else
-	{
-		USARTTransmitChar('B');
-	}
-	
-	if (bf == 0x82 || INDEX_R >= N_BUFF)
-	{
-		INDEX_R = 0;
-		DATA_AVAL = 1;
-	}
-
+	DATA_AVAL = 1;
+	NEW_DATA = UDR;
 }
 
 unsigned char stroka [80] = {
-	0x00, 0x00, 0x3E, 0x02, 0x02, 0x3E, 0x00, 0x3E, 0x1A, 0x0E, 0x06, 0x00, 0x3E, 0x2A, 0x22, 0x00,
-	0x3E, 0x2A, 0x3E, 0x36, 0x30, 0x00, 0x3E, 0x6A, 0x62, 0x32, 0x00, 0x70, 0x1E, 0x12, 0x5E, 0x70,
-	0x00, 0x3E, 0x08, 0x08, 0x3E, 0x00, 0x3E, 0x12, 0x12, 0x3E, 0x00, 0x3E, 0x32, 0x12, 0x1E, 0x00,
-	0x3E, 0x26, 0x26, 0x3C, 0x00, 0x70, 0x1E, 0x12, 0x5E, 0x70, 0x00, 0x10, 0x30, 0x24, 0x20, 0x20,
-	0x24, 0x30, 0x10, 0x00, 0x00, 0x00,
+	0,0,0,0,0,0,0,
+	34,65,
+	73,73,54,0,126,17,17,17,126,0,127,1,1,1,1,0,
+	126,17,17,17,14,0,3,4,8,16,127,0,34,65,73,73,
+	54,0,127,8,20,34,65,0,126,17,17,17,126,0,0,0,
+	32,0,0,0,0,0,32,0,0,0,0,0,32,0,0,0,
+	0,0,0,0,0,0,0
 };
 
   
@@ -158,10 +140,11 @@ int main(void)
 		
 		if(DATA_AVAL == 1)
 		{
-			for(int l = 0; l<80;l++)
+			for(int l = 79; l>0;l--)
 			{
-				stroka[l] = buffer[l+1];
-			}	
+				stroka[l] = stroka[l-1];
+			}
+			stroka[0] = NEW_DATA;
 			DATA_AVAL = 0;
 		}
 		
