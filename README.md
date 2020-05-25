@@ -15,15 +15,19 @@
 Далее скопировать прошивку *Planeta.hex* и файл конфигурации *avrdude.conf* в директорию Omega2 */root*  
 После этого необходимо прошить встроенный микроконтроллер Atmega16. 
 Проверяем подключение
-   *avrdude -p atmega16 -C /root/avrdude.conf -c planeta -v*  
+
+
+*avrdude -p atmega16 -C /root/avrdude.conf -c planeta -v*  
 Если все нормально, то прошиваем  
 *avrdude -p atmega16 -C /etc/avrdude.conf -c planeta -v -U flash:w:Planeta.hex:i*
 
 
 
 Теперь необходимо скопировать *start.py* в директорию /root и добавить его загрузку в cron
-    *crontab -e*
-   после чего вписать следующую строчку  
+
+
+*crontab -e*
+  после чего вписать следующую строчку  
 
 *`*` `*` `*` `*` `*` ps | grep "python3 /root/start.py" | grep -v grep || python3 /root/start.py*
 
